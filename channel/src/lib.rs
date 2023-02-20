@@ -3,34 +3,17 @@ pub mod block_channel;
 pub mod channel;
 pub mod oneshot_channel;
 pub mod safe_channel;
-pub mod spin_lock;
 
 #[cfg(test)]
 mod tests {
-    use crate::avoidalloc_channel::Channel as AvoidallocChannel;
-    use crate::block_channel::Channel as BlockChannel;
-    use crate::channel::Channel;
-    use crate::oneshot_channel::Channel as OneshotChannel;
-    use crate::safe_channel::channel;
-    use crate::spin_lock::SpinLock;
+    use super::avoidalloc_channel::Channel as AvoidallocChannel;
+    use super::block_channel::Channel as BlockChannel;
+    use super::channel::Channel;
+    use super::oneshot_channel::Channel as OneshotChannel;
+    use super::safe_channel::channel;
     use std::process;
     use std::thread;
     use std::time::Duration;
-
-    #[test]
-    fn test_spin_lock() {
-        let x = SpinLock::new(Vec::new());
-        thread::scope(|s| {
-            s.spawn(|| x.lock().push(1));
-            s.spawn(|| {
-                let mut g = x.lock();
-                g.push(2);
-                g.push(2);
-            });
-        });
-        let g = x.lock();
-        assert!(g.as_slice() == [1, 2, 2] || g.as_slice() == [2, 2, 1]);
-    }
 
     #[test]
     fn test_channel() {
@@ -61,7 +44,6 @@ mod tests {
         thread::scope(|s| {
             s.spawn(|| {
                 channel.send("hello world!");
-                channel.send("hello world2!");
                 t.unpark();
             });
             while !channel.is_ready() {
