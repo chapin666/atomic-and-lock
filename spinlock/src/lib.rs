@@ -1,8 +1,8 @@
-pub mod spin_lock;
+pub mod spinlock_v1;
 
 #[cfg(test)]
 mod tests {
-    use super::spin_lock::SpinLock;
+    use super::spinlock_v1::SpinLock;
     use std::thread;
 
     #[test]

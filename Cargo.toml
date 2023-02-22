@@ -1,2 +1,2 @@
 [workspace]
-members = ["spinlock", "channel", "arc"]
+members = ["spinlock", "channel", "arc", "mutex", "condvar", "rwlock"]

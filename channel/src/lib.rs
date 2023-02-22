@@ -1,16 +1,16 @@
-pub mod avoidalloc_channel;
-pub mod block_channel;
-pub mod channel;
-pub mod oneshot_channel;
-pub mod safe_channel;
+pub mod channel_v1;
+pub mod channel_v2;
+pub mod channel_v3;
+pub mod channel_v4;
+pub mod channel_v5;
 
 #[cfg(test)]
 mod tests {
-    use super::avoidalloc_channel::Channel as AvoidallocChannel;
-    use super::block_channel::Channel as BlockChannel;
-    use super::channel::Channel;
-    use super::oneshot_channel::Channel as OneshotChannel;
-    use super::safe_channel::channel;
+    use super::channel_v1::Channel;
+    use super::channel_v2::Channel as OneshotChannel;
+    use super::channel_v3::channel;
+    use super::channel_v4::Channel as AvoidallocChannel;
+    use super::channel_v5::Channel as BlockChannel;
     use std::process;
     use std::thread;
     use std::time::Duration;

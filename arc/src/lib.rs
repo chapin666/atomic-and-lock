@@ -1,12 +1,12 @@
-pub mod basic_arc;
-pub mod optimization_arc;
-pub mod weak_arc;
+pub mod arc_v1;
+pub mod arc_v2;
+pub mod arc_v3;
 
 #[cfg(test)]
 mod tests {
-    use crate::basic_arc::Arc;
-    use crate::optimization_arc::Arc as OptimizationArc;
-    use crate::weak_arc::Arc as WeakArc;
+    use crate::arc_v1::Arc;
+    use crate::arc_v2::Arc as WeakArc;
+    use crate::arc_v3::Arc as OptimizationArc;
     use std::sync::atomic::AtomicUsize;
     use std::sync::atomic::Ordering::Relaxed;
     use std::thread;
