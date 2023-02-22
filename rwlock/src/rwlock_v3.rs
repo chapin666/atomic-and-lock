@@ -55,6 +55,7 @@ impl<T> RwLock<T> {
                 }
             }
 
+            // Block new readers, by making sure the state is odd.
             if s % 2 == 0 {
                 match self.state.compare_exchange(s, s + 1, Relaxed, Relaxed) {
                     Ok(_) => {}
@@ -65,10 +66,10 @@ impl<T> RwLock<T> {
                 }
             }
 
+            // Wait, if it's still locked
             let w = self.writer_wake_counter.load(Acquire);
             s = self.state.load(Relaxed);
             if s >= 2 {
-                // Wait while already locked.
                 wait(&self.writer_wake_counter, w);
                 s = self.state.load(Relaxed);
             }
